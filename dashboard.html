@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GamerZone Events & Profiles</title>
+  <style>
+    body {
+      background-color: #181a2b;
+      font-family: 'Poppins', sans-serif;
+      color: #f0f5fc;
+    }
+    header {
+      background-color: #282f49;
+      padding: 18px 0;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    header h1 {
+      color: #53c1f5;
+      margin: 0;
+      font-size: 2.2em;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+    .section {
+      max-width: 700px;
+      margin: 25px auto;
+      background: #232744;
+      padding: 22px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px #10132655;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+      color: #53c1f5;
+    }
+    /* For events and profiles */
+    .event, .profile {
+      background: #29304b;
+      margin-bottom: 18px;
+      padding: 13px 16px;
+      border-radius: 8px;
+      box-shadow: 0 1px 6px #49659533;
+    }
+    .event-title {
+      font-size: 1.14em;
+      color: #ffd166;
+      font-weight: bold;
+    }
+    .event-desc, .profile-detail {
+      margin-bottom: 2px;
+    }
+    .profile-title {
+      color: #ef68ab;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+    /* Add forms */
+    .form-label {
+      font-weight: bold;
+      margin-top: 12px;
+      display: block;
+    }
+    .form-section {
+      margin-top: 20px;
+      padding-top: 13px;
+      border-top: 1px solid #53c1f599;
+    }
+    input[type="text"], input[type="email"], input[type="date"] {
+      width: 97%;
+      padding: 7px;
+      margin-bottom: 8px;
+      border: 2px solid #53c1f5;
+      border-radius: 5px;
+      background: #232744;
+      color: #f0f5fc;
+      font-size: 1em;
+    }
+    button {
+      padding: 8px 25px;
+      border: none;
+      border-radius: 5px;
+      background: #53c1f5;
+      color: #232744;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 6px;
+    }
+    button:hover {
+      background: #2e90d1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>GamerZone</h1>
+  </header>
+  <main>
+    <div class="section">
+      <h2>Upcoming Events</h2>
+      <div id="eventList"></div>
+      <!-- Add new event form -->
+      <div class="form-section">
+        <label class="form-label">Add New Event:</label>
+        <input type="text" id="eventName" placeholder="Event Name" />
+        <input type="date" id="eventDate" />
+        <input type="text" id="eventLocation" placeholder="Location" />
+        <input type="text" id="eventDesc" placeholder="Description" />
+        <button id="addEventBtn">Add Event</button>
+      </div>
+    </div>
+    <div class="section">
+      <h2>Student Profiles</h2>
+      <div id="profileList"></div>
+      <!-- Add student profile form -->
+      <div class="form-section">
+        <label class="form-label">Add New Student Profile:</label>
+        <input type="text" id="studentName" placeholder="Full Name" />
+        <input type="text" id="studentTag" placeholder="Gamertag" />
+        <input type="text" id="studentFavGame" placeholder="Favorite Game" />
+        <input type="email" id="studentEmail" placeholder="Email" />
+        <button id="addProfileBtn">Add Profile</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // --- LOAD INITIAL DATA (could also fetch from a .json file or server) ---
+    let events = JSON.parse(localStorage.getItem("gamerzone_events")) || [
+      {
+        id: 1,
+        name: "Valorant Tournament",
+        date: "2025-09-10",
+        location: "Main Hall",
+        description: "Compete with top gamers in a thrilling Valorant showdown!"
+      },
+      {
+        id: 2,
+        name: "FIFA Fest",
+        date: "2025-10-01",
+        location: "Auditorium",
+        description: "Test your soccer skills and win cool prizes."
+      }
+    ];
+    let profiles = JSON.parse(localStorage.getItem("gamerzone_profiles")) || [
+      {
+        fullname: "Rahul Singh",
+        gamertag: "ShadowSnipe",
+        favoritegame: "Valorant",
+        email: "rahul@gmail.com"
+      },
+      {
+        fullname: "Aditi Verma",
+        gamertag: "AceQueen",
+        favoritegame: "FIFA",
+        email: "aditi@gmail.com"
+      }
+    ];
+
+    function renderEvents() {
+      const eventList = document.getElementById("eventList");
+      eventList.innerHTML = "";
+      events.forEach(ev => {
+        eventList.innerHTML += `
+          <div class="event">
+            <div class="event-title">${ev.name}</div>
+            <div class="event-desc">${ev.description}</div>
+            <div>Date: <strong>${ev.date}</strong> | Location: <strong>${ev.location}</strong></div>
+          </div>
+        `;
+      });
+    }
+
+    function renderProfiles() {
+      const profileList = document.getElementById("profileList");
+      profileList.innerHTML = "";
+      profiles.forEach(stu => {
+        profileList.innerHTML += `
+          <div class="profile">
+            <div class="profile-title">${stu.fullname} <small>(${stu.gamertag})</small></div>
+            <div class="profile-detail">Favorite Game: ${stu.favoritegame}</div>
+            <div class="profile-detail">Email: ${stu.email}</div>
+          </div>
+        `;
+      });
+    }
+
+    // --- ADD EVENT HANDLING ---
+    document.getElementById("addEventBtn").onclick = function() {
+      const name = document.getElementById("eventName").value.trim();
+      const date = document.getElementById("eventDate").value;
+      const location = document.getElementById("eventLocation").value.trim();
+      const description = document.getElementById("eventDesc").value.trim();
+      if (name && date && location && description) {
+        events.push({
+          id: events.length + 1,
+          name, date, location, description
+        });
+        localStorage.setItem("gamerzone_events", JSON.stringify(events));
+        renderEvents();
+        // Clear input
+        document.getElementById("eventName").value = "";
+        document.getElementById("eventDate").value = "";
+        document.getElementById("eventLocation").value = "";
+        document.getElementById("eventDesc").value = "";
+      } else {
+        alert("Please fill all event fields!");
+      }
+    };
+
+    // --- ADD PROFILE HANDLING ---
+    document.getElementById("addProfileBtn").onclick = function() {
+      const fullname = document.getElementById("studentName").value.trim();
+      const gamertag = document.getElementById("studentTag").value.trim();
+      const favoritegame = document.getElementById("studentFavGame").value.trim();
+      const email = document.getElementById("studentEmail").value.trim();
+      if (fullname && gamertag && favoritegame && email) {
+        profiles.push({
+          fullname, gamertag, favoritegame, email
+        });
+        localStorage.setItem("gamerzone_profiles", JSON.stringify(profiles));
+        renderProfiles();
+        // Clear input
+        document.getElementById("studentName").value = "";
+        document.getElementById("studentTag").value = "";
+        document.getElementById("studentFavGame").value = "";
+        document.getElementById("studentEmail").value = "";
+      } else {
+        alert("Please fill all profile fields!");
+      }
+    };
+
+    // --- INITIAL RENDER ---
+    renderEvents();
+    renderProfiles();
+  </script>
+</body>
+</html>

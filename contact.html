@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | GamerZone</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 870px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f8faff;
+      color: #222;
+    }
+    h1 {
+      color: #0066cc;
+    }
+    .contact-info {
+      background: #f4f4f4;
+      padding: 18px;
+      border-radius: 7px;
+      margin: 20px 0;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 16px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    .contact-form button {
+      background: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .faq-section {
+      background: #fff;
+      border-radius: 7px;
+      box-shadow: 0 2px 8px #ddd;
+      margin: 32px 0;
+      padding: 24px;
+    }
+    .faq-item {
+      border-bottom: 1px solid #eee;
+      padding: 14px 0;
+    }
+    .faq-question {
+      cursor: pointer;
+      color: #1a4f9b;
+      font-weight: bold;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: color 0.2s;
+    }
+    .faq-answer {
+      display: none;
+      margin: 10px 0 0 0;
+      color: #222;
+      font-size: 0.98rem;
+    }
+    .faq-item.active .faq-answer {
+      display: block;
+      animation: fadeIn 0.3s;
+    }
+    .faq-item.active .faq-question {
+      color: #2067dd;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    #popupBanner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      background: #273baa;
+      color: #fff;
+      padding: 18px 20px 15px 30px;
+      z-index: 9999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 6px 16px #0002;
+    }
+    .close-btn {
+      background: #fff;
+      color: #273baa;
+      border: none;
+      font-size: 1.12rem;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-weight: bold;
+      line-height: 1;
+      margin-left: 16px;
+    }
+    
+    .slider {
+      position: relative;
+      background: #222a45;
+      color: #fff;
+      border-radius: 9px;
+      overflow: hidden;
+      margin: 30px 0;
+      box-shadow: 0 4px 14px #0001;
+      width: 100%;
+      max-width: 480px;
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide.active {
+      display: flex;
+      animation: fadeInSlider 0.5s;
+    }
+    @keyframes fadeInSlider {
+      from { opacity: 0;}
+      to   { opacity: 1;}
+    }
+    .slide img {
+      max-width: 120px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .slider-controls {
+      position: absolute;
+      width: 100%;
+      top: 42%;
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+    .slider-controls button {
+      pointer-events: all;
+      background: #fff9;
+      color: #222a45;
+      border: none;
+      font-size: 1.25em;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      margin: 0 12px;
+    }
+    footer {
+      margin-top: 40px;
+      color: #7a8394;
+      text-align: center;
+      font-size: 0.97rem;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="popupBanner" style="display:none;">
+    <span>
+      🎮 Welcome to GamerZone! Don't miss our new summer offers.
+    </span>
+    <button class="close-btn" onclick="dismissPopup()" aria-label="Dismiss">&times;</button>
+  </div>
+
+  <h1>Contact GamerZone</h1>
+  
+  <div class="contact-info" id="dynamicContactInfo">
+ 
+  </div>
+
+  <p>For inquiries, support, or feedback, please fill out the form below or contact us directly.</p>
+  <h2>Send Us a Message</h2>
+  <form class="contact-form" id="contactForm" action="#" method="post">
+    <div style="display: flex; gap: 10px;">
+      <div style="flex: 1;">
+        <label for="fname">First Name</label>
+        
+        <input type="text" id="fname" name="fname" required>
+      </div>
+      
+      <div style="flex: 1;">
+        <label  for="lname">Last Name  </label>
+        <input type="text" id="lname" name="lname">
+      </div>
+    </div>
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+    <label for="phone">Phone</label>
+    <input type="tel" id="phone" name="phone">
+    <label for="message">Message</label>
+    <textarea id="message" name="message" rows="5" required></textarea>
+    <button type="submit" id="submitButton">Send Message</button>
+  </form>
+
+  
+  <div class="slider" id="slider">
+    <div class="slide active">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiPbpf0aaLG1YgMeK7VdlFYQesbT3nHoFNHQ&s" alt="Gamer Lounge">
+      <div>Visit our newly updated Gaming Lounge!</div>
+    </div>
+    <div class="slide">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIpipdRc9NmRoKBRhgv5nx1ZgS7qt739hFiQ&s" alt="PC Gaming">
+      <div>Top-tier PCs and consoles for ultimate fun.</div>
+    </div>
+    <div class="slide">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMtijYIBAU9WskKLtomz314oS3rF1xI5_sdQ&s" alt="Arcade">
+      <div>Arcade classics and modern favorites await!</div>
+    </div>
+    <div class="slider-controls">
+      <button id="prevSlide" aria-label="Previous Slide">&#8592;</button>
+      <button id="nextSlide" aria-label="Next Slide">&#8594;</button>
+    </div>
+  </div>
+
+
+  <div class="faq-section" id="faqSection">
+    <h2>Frequently Asked Questions</h2>
+   
+    <div id="faqContainer"></div>
+  </div>
+
+  <footer>
+    <p>© 2025 GamerZone. All rights reserved.</p>
+  </footer>
+
+  <script>
+   
+    const contactData = {
+      address: "khodiyar colony , 80 foot road jamnagar",
+      phone: "+91 6985654129",
+      email: "cs@gamerzoneme.com",
+      hours: "10:00 AM – 12:00 AM (Sun–Sat)"
+    };
+    const contactInfoDiv = document.getElementById('dynamicContactInfo');
+    contactInfoDiv.innerHTML = `
+      <p><strong>Address:</strong> ${contactData.address}</p>
+      <p><strong>Phone:</strong> ${contactData.phone}</p>
+      <p><strong>Email:</strong> <a href="mailto:${contactData.email}">${contactData.email}</a></p>
+      <p><strong>Hours:</strong> ${contactData.hours}</p>
+    `;
+
+  
+    document.getElementById('email').addEventListener('focus', function() {
+      this.style.background = '#e2efff';
+      this.style.borderColor = '#37a7fd';
+    });
+    document.getElementById('email').addEventListener('blur', function() {
+      this.style.background = '';
+      this.style.borderColor = '';
+    });
+
+    const faqJSON = [
+      {
+        question: "What are your opening hours?",
+        answer: "We are open daily from 10:00 AM to 12:00 AM, including weekends."
+      },
+      {
+        question: "Do I need to book in advance?",
+        answer: "Walk-ins are welcome, but we recommend booking during weekends to guarantee your slot."
+      },
+      {
+        question: "What payment methods do you accept?",
+        answer: "We accept cash, major credit/debit cards, and mobile payment options."
+      },
+      {
+        question: "Do you host gaming tournaments?",
+        answer: "Yes! We regularly host tournaments for popular games. Check our social media or ask staff for the next event."
+      },
+      {
+        question: "Is there food or drinks available?",
+        answer: "Light snacks and drinks are available for purchase at our cafe area inside the lounge."
+      }
+    ];
+
+    const faqContainer = document.getElementById('faqContainer');
+    faqJSON.forEach((item, idx) => {
+      const faqItem = document.createElement('div');
+      faqItem.className = 'faq-item';
+      faqItem.innerHTML = `
+        <div class="faq-question">
+          <span>${item.question}</span>
+          <span style="font-size:1.25em;">&#9660;</span>
+        </div>
+        <div class="faq-answer">${item.answer}</div>
+      `;
+      faqContainer.appendChild(faqItem);
+    });
+
+
+    faqContainer.addEventListener('click', function(e) {
+      const q = e.target.closest('.faq-question');
+      if (q) {
+        const item = q.parentElement;
+        item.classList.toggle('active');
+      }
+    });
+
+    function showPopup() {
+      document.getElementById('popupBanner').style.display = 'flex';
+    }
+    function dismissPopup() {
+      document.getElementById('popupBanner').style.display = 'none';
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(showPopup, 800); 
+    });
+
+    const slides = document.querySelectorAll('#slider .slide');
+    let currentSlide = 0;
+    function updateSlider(index) {
+      slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    }
+    document.getElementById('prevSlide').onclick = function(){
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      updateSlider(currentSlide);
+    };
+    document.getElementById('nextSlide').onclick = function(){
+      currentSlide = (currentSlide + 1) % slides.length;
+      updateSlider(currentSlide);
+    };
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      updateSlider(currentSlide);
+    }, 7000);
+
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      document.getElementById('submitButton').textContent = "Message Sent!";
+      document.getElementById('submitButton').disabled = true;
+      setTimeout(() => {
+        document.getElementById('submitButton').textContent = "Send Message";
+        document.getElementById('submitButton').disabled = false;
+      }, 2500);
+      this.reset();
+    });
+  </script>
+</body>
+</html>
